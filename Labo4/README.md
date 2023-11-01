@@ -1,5 +1,21 @@
 ### TASK 2: USE THE AWS COMMAND-LINE INTERFACE TO MANAGE BUCKETS AND OBJECTS
 
+1) Install the AWS CLI by following the instructions in Installing or updating the latest version of the AWS CLI. Note
+for macOS users: The AWS CLI is available in homebrew as awscli.
+```shell
+pablo@Macbook-Pro-M1 Labo4 % brew install awscli
+```
+
+2) Set up your security credentials, default Region and default output format by following the instructions in Quick
+setup.
+```shell
+pablo@Macbook-Pro-M1 Labo4 % aws configure
+AWS Access Key ID [****************HZEW]: AKIAQ3ED337FZTQ5HZEW
+AWS Secret Access Key [****************aclg]: 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
+Default region name [us-east-1]: 
+Default output format [json]: 
+```
+
 3) Verify that the tool is configured correctly.
 
 List all available regions:
@@ -392,3 +408,50 @@ pablo@Macbook-Pro-M1 Labo4 % aws s3 ls s3://ist-grd-urizar-valzino-bucket-cli/
 pablo@Macbook-Pro-M1 Labo4 % aws s3 ls s3://ist-grd-urizar-valzino-bucket-cli/Folder2/
 2023-11-01 11:31:01        337 lab.csv
 ```
+
+### TASK 3: CREATE A STATIC WEB SITE
+
+2) On which URL is your new website reachable?
+http://ist-grd-urizar-valzino-bucket.s3-website-us-east-1.amazonaws.com/
+
+### TASK 4: EXPLORE A PUBLIC BUCKET WITH A LARGE DATASET
+
+1) The data location of the Common Crawl datasets is described on the page Get Started.
+When was the latest crawl? September/October 2023
+What is the bucket name? commoncrawl
+Under which prefix is the latest crawl stored? crawl-data/CC-MAIN-2023-40
+
+2) Log into the AWS S3 Management Console. Replace the browser URL with
+
+https://s3.console.aws.amazon.com/s3/buckets/<bucketname>/
+Where you replace <bucketname> with the name of the bucket. You should see a bucket with objects and folders.
+
+https://s3.console.aws.amazon.com/s3/buckets/commoncrawl/?region=us-east-1&tab=objects
+
+3) Navigate to the root folder of the latest crawl. Click on the object index.html. Click the Open button to load it
+into your browser. What is the URL of this object?
+https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html
+
+4) Explore a bit the objects and folders.
+What are WARC, WAT and WET files (look at the Get Started guide)?
+- "WARC files which store the raw crawl data". WARC files are like web time capsules that save entire websites,
+including text, images, and more, so we can look
+back in time and see how they used to be.
+- "WAT files which store computed metadata for the data stored in the WARC". WAT files are like labels on the time
+capsules. They tell us when each web snapshot was taken, what's inside, and
+where it came from.
+- "WET files which store extracted plaintext from the data stored in the WARC". WET files are like books made from the
+time capsules. They take out the words from websites, so we can easily read and search them.
+
+What is the typical size of a WARC file (ballpark)?
+"The WARC format allows for more efficient storage and processing of Common Crawl’s free multi-billion page web
+archives, which can be **hundreds of terabytes** in size."
+
+Why is it not sufficient to just store the WARC, WAT and WET files in the bucket? What other type of file is needed?
+If we only have the WARC, WAT and WET files, the content may not be easily accessible or readable by users without
+additional tools. These files provide the raw data and metadata but accessing and understanding its content will
+require other resources such as indexes, checksums, software tools, and documentation.
+
+What storage classes have the Common Crawl developers chosen to store the data?
+They use Standard Storage for data that is frequently accessed, Intelligent-Tiering to automatically move objects
+between two access tiers (frequent and infrequent) and Glacier for less frequently accessed data.
