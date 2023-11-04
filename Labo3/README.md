@@ -1,11 +1,13 @@
+# IST_labo3
+Authors : Valzino Benjamin, Urizar Pablo
 ### TASK 1: USE THE WEB CONSOLE TO CREATE AN S3 BUCKET AND UPLOAD AND DOWNLOAD OBJECTS (FILES)
 
-1) Navigate to the S3 console.
+**1. Navigate to the S3 console.**
 
-2) Create a new bucket
+**2.Create a new bucket**
 ![img.png](screenshots/new_bucket.png)
 
-3) Create on your local machine a text file named lab.csv with the following content:
+**3.Create on your local machine a text file named lab.csv with the following content:**
 ```text
  CustomerID,First Name,Last Name,Join Date,Street Address,City,State,Phone
  001,Alejandro,Rosalez,12/12/2013,123 Main St.,Baltimore,MD,765-234-2349
@@ -26,27 +28,25 @@ pablo@Macbook-Pro-M1 Labo3 % cat lab.csv
 Upload the file to the bucket.
 ![img.png](screenshots/upload.png)
 
-4) To verify that it was uploaded successfully, we will do an SQL query on the file, and at the same time learn that S3
-has a buil-in SQL engine that works directly on CSV files.
+**4.To verify that it was uploaded successfully, we will do an SQL query on the file, and at the same time learn that
+S3 has a buil-in SQL engine that works directly on CSV files.**
 
 ![img.png](screenshots/query1.png)
 
 ![img.png](screenshots/query2.png)
 
-5) Use the web console to download the file to your local machine.
+**5.Use the web console to download the file to your local machine.**
 ![img.png](screenshots/download.png)
-
-
 ### TASK 2: USE THE AWS COMMAND-LINE INTERFACE TO MANAGE BUCKETS AND OBJECTS
 
-1) Install the AWS CLI by following the instructions in Installing or updating the latest version of the AWS CLI. Note
-for macOS users: The AWS CLI is available in homebrew as awscli.
+**1.Install the AWS CLI by following the instructions in Installing or updating the latest version of the AWS CLI. Note
+for macOS users: The AWS CLI is available in homebrew as awscli.**
 ```shell
 pablo@Macbook-Pro-M1 Labo4 % brew install awscli
 ```
 
-2) Set up your security credentials, default Region and default output format by following the instructions in Quick
-setup.
+**2.Set up your security credentials, default Region and default output format by following the instructions in Quick
+setup.**
 ```shell
 pablo@Macbook-Pro-M1 Labo4 % aws configure
 AWS Access Key ID [****************HZEW]: AKIAQ3ED337FZTQ5HZEW
@@ -55,7 +55,7 @@ Default region name [us-east-1]:
 Default output format [json]: 
 ```
 
-3) Verify that the tool is configured correctly.
+**3.Verify that the tool is configured correctly.**
 
 List all available regions:
 ```shell
@@ -367,7 +367,8 @@ pablo@Macbook-Pro-M1 Labo3 % aws s3 ls | grep urizar
 2023-11-01 10:43:26 ist-grd-urizar-valzino-bucket
 ```
 
-4) Manipulate buckets and objects. Use the documentation Using high-level (S3) commands with the AWS CLI as a reference.
+**4.Manipulate buckets and objects. Use the documentation Using high-level (S3) commands with the AWS CLI as a
+reference.**
 
 Create a new bucket:
 ```shell
@@ -406,8 +407,8 @@ pablo@Macbook-Pro-M1 Labo4 % aws s3 rm s3://ist-grd-urizar-valzino-bucket-cli/co
 delete: s3://ist-grd-urizar-valzino-bucket-cli/copied-lab.csv
 ```
 
-5) S3 folders behave differently from file system folders. In fact a folder in S3 is a 0-byte object whose name ends
-with a slash (/). Read the introduction on the page Organizing objects in the Amazon S3 console using folders.
+**5.S3 folders behave differently from file system folders. In fact a folder in S3 is a 0-byte object whose name ends
+with a slash (/). Read the introduction on the page Organizing objects in the Amazon S3 console using folders.**
 
 Create a folder (using the Management Console). Verification that the folder was created:
 ```shell
@@ -450,12 +451,10 @@ pablo@Macbook-Pro-M1 Labo4 % aws s3 ls s3://ist-grd-urizar-valzino-bucket-cli/
 pablo@Macbook-Pro-M1 Labo4 % aws s3 ls s3://ist-grd-urizar-valzino-bucket-cli/Folder2/
 2023-11-01 11:31:01        337 lab.csv
 ```
-
-
 ### TASK 3: CREATE A STATIC WEB SITE
 
-1) Follow the instructions of the Tutorial: Configuring a static website on Amazon S3 to create a new bucket for a 
-static website.
+**1.Follow the instructions of the Tutorial: Configuring a static website on Amazon S3 to create a new bucket for a 
+static website.**
 
 Enable static website hosting:
 ![img.png](screenshots/static_website_1.png)
@@ -495,32 +494,30 @@ Configure an index document (index.html):
 </html>
 ```
 
-2) On which URL is your new website reachable?
+**2.On which URL is your new website reachable?**
 http://ist-grd-urizar-valzino-bucket.s3-website-us-east-1.amazonaws.com
 
 ![img.png](screenshots/website_s3.png)
-
-
 ### TASK 4: EXPLORE A PUBLIC BUCKET WITH A LARGE DATASET
 
-1) The data location of the Common Crawl datasets is described on the page Get Started.
+**1.The data location of the Common Crawl datasets is described on the page Get Started.**
 
  - When was the latest crawl? `September/October 2023`
  - What is the bucket name? `commoncrawl`
  - Under which prefix is the latest crawl stored? `crawl-data/CC-MAIN-2023-40`
 
-2) Log into the AWS S3 Management Console. Replace the browser URL with
+**2.Log into the AWS S3 Management Console. Replace the browser URL with**
 https://s3.console.aws.amazon.com/s3/buckets/<bucketname>/ Where you replace <bucketname> with the name of the bucket.
 You should see a bucket with objects and folders.
 
 https://s3.console.aws.amazon.com/s3/buckets/commoncrawl/?region=us-east-1&tab=objects
 
-3) Navigate to the root folder of the latest crawl. Click on the object index.html. Click the Open button to load it
+**3.Navigate to the root folder of the latest crawl. Click on the object index.html. Click the Open button to load it**
 into your browser. What is the URL of this object?
 https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html
 
 
-4) Explore a bit the objects and folders.
+**4.Explore a bit the objects and folders.**
 What are WARC, WAT and WET files (look at the Get Started guide)?
 - "WARC files which store the raw crawl data". WARC files are like web time capsules that save entire websites,
 including text, images, and more, so we can look
