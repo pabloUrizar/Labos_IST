@@ -1,3 +1,42 @@
+### TASK 1: USE THE WEB CONSOLE TO CREATE AN S3 BUCKET AND UPLOAD AND DOWNLOAD OBJECTS (FILES)
+
+1) Navigate to the S3 console.
+
+2) Create a new bucket
+![img.png](screenshots/new_bucket.png)
+
+3) Create on your local machine a text file named lab.csv with the following content:
+```text
+ CustomerID,First Name,Last Name,Join Date,Street Address,City,State,Phone
+ 001,Alejandro,Rosalez,12/12/2013,123 Main St.,Baltimore,MD,765-234-2349
+ 002,Jane,Doe,10/5/2014,456 State St.,Seattle,WA,415-889-4932
+ 003,John,Stiles,9/20/20016,1980 8th St.,Brooklyn,NY,917-123-9308
+ 004,Li,Juan,6/29/2011,1323 22nd Ave.,Albany,NY,917-332-3432
+```
+
+```shell
+pablo@Macbook-Pro-M1 Labo3 % cat lab.csv 
+ CustomerID,First Name,Last Name,Join Date,Street Address,City,State,Phone
+ 001,Alejandro,Rosalez,12/12/2013,123 Main St.,Baltimore,MD,765-234-2349
+ 002,Jane,Doe,10/5/2014,456 State St.,Seattle,WA,415-889-4932
+ 003,John,Stiles,9/20/20016,1980 8th St.,Brooklyn,NY,917-123-9308
+ 004,Li,Juan,6/29/2011,1323 22nd Ave.,Albany,NY,917-332-3432
+```
+
+Upload the file to the bucket.
+![img.png](screenshots/upload.png)
+
+4) To verify that it was uploaded successfully, we will do an SQL query on the file, and at the same time learn that S3
+has a buil-in SQL engine that works directly on CSV files.
+
+![img.png](screenshots/query1.png)
+
+![img.png](screenshots/query2.png)
+
+5) Use the web console to download the file to your local machine.
+![img.png](screenshots/download.png)
+
+
 ### TASK 2: USE THE AWS COMMAND-LINE INTERFACE TO MANAGE BUCKETS AND OBJECTS
 
 1) Install the AWS CLI by following the instructions in Installing or updating the latest version of the AWS CLI. Note
@@ -169,7 +208,7 @@ pablo@Macbook-Pro-M1 Labos_IST %  aws ec2 describe-account-attributes
 }
 ```
 
-Display available EC2 Instance types:
+Display available EC2 Instance types (a filter was applied to only display t2, m5, c5 and t3 instances):
 ```shell
 pablo@Macbook-Pro-M1 Labos_IST % aws ec2 describe-instance-type-offerings > instance-types.json 
 
@@ -323,6 +362,9 @@ pablo@Macbook-Pro-M1 Labo4 % aws s3 ls
 2023-11-01 10:43:35 ist-grf-gogniat-bucket1
 2023-11-01 10:40:00 ist-gri-decoppet-bucket1
 2023-11-01 10:41:34 ist-gri-lopesgouveia-bucket
+
+pablo@Macbook-Pro-M1 Labo3 % aws s3 ls | grep urizar
+2023-11-01 10:43:26 ist-grd-urizar-valzino-bucket
 ```
 
 4) Manipulate buckets and objects. Use the documentation Using high-level (S3) commands with the AWS CLI as a reference.
@@ -409,28 +451,74 @@ pablo@Macbook-Pro-M1 Labo4 % aws s3 ls s3://ist-grd-urizar-valzino-bucket-cli/Fo
 2023-11-01 11:31:01        337 lab.csv
 ```
 
+
 ### TASK 3: CREATE A STATIC WEB SITE
 
+1) Follow the instructions of the Tutorial: Configuring a static website on Amazon S3 to create a new bucket for a 
+static website.
+
+Enable static website hosting:
+![img.png](screenshots/static_website_1.png)
+
+![img.png](screenshots/static_website_2.png)
+
+Edit Block Public Access settings:
+![img.png](screenshots/block_public_access.png)
+
+Add a bucket policy that makes your bucket content publicly available
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "PublicReadGetObject",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::ist-grd-urizar-valzino-bucket/*"
+		}
+	]
+}
+```
+
+Configure an index document (index.html):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Labo 3 IST - AWS</title>
+</head>
+<body>
+    <h1>Labo 3 IST - AWS</h1>
+    <p>Authors: Benjamin Valzino and Pablo Urizar</p>
+</body>
+</html>
+```
+
 2) On which URL is your new website reachable?
-http://ist-grd-urizar-valzino-bucket.s3-website-us-east-1.amazonaws.com/
+http://ist-grd-urizar-valzino-bucket.s3-website-us-east-1.amazonaws.com
+
+![img.png](screenshots/website_s3.png)
+
 
 ### TASK 4: EXPLORE A PUBLIC BUCKET WITH A LARGE DATASET
 
 1) The data location of the Common Crawl datasets is described on the page Get Started.
-When was the latest crawl? September/October 2023
-What is the bucket name? commoncrawl
-Under which prefix is the latest crawl stored? crawl-data/CC-MAIN-2023-40
+
+ - When was the latest crawl? `September/October 2023`
+ - What is the bucket name? `commoncrawl`
+ - Under which prefix is the latest crawl stored? `crawl-data/CC-MAIN-2023-40`
 
 2) Log into the AWS S3 Management Console. Replace the browser URL with
-
-https://s3.console.aws.amazon.com/s3/buckets/<bucketname>/
-Where you replace <bucketname> with the name of the bucket. You should see a bucket with objects and folders.
+https://s3.console.aws.amazon.com/s3/buckets/<bucketname>/ Where you replace <bucketname> with the name of the bucket.
+You should see a bucket with objects and folders.
 
 https://s3.console.aws.amazon.com/s3/buckets/commoncrawl/?region=us-east-1&tab=objects
 
 3) Navigate to the root folder of the latest crawl. Click on the object index.html. Click the Open button to load it
 into your browser. What is the URL of this object?
 https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html
+
 
 4) Explore a bit the objects and folders.
 What are WARC, WAT and WET files (look at the Get Started guide)?
