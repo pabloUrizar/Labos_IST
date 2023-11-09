@@ -113,7 +113,125 @@ Now that we unassumed the BucketsAccessRole, we have the permissions that are as
 
 ### TASK 5: UNDERSTANDING RESOURCE-BASED POLICIES
 
+**1. Observe the details of the bucket policy that is applied to bucket2 :**
+Bucket policy:
+```json
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "S3Write",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::058258612171:role/BucketsAccessRole"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::bucket2-cd834d37-7b45-475e-998a-63dc8a5a4020/*"
+        },
+        {
+            "Sid": "ListBucket",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::058258612171:role/BucketsAccessRole"
+            },
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::bucket2-cd834d37-7b45-475e-998a-63dc8a5a4020"
+        }
+    ]
+}
+```
+
 ### TASK 6: FIND A WAY TO UPLOAD AN OBJECT TO BUCKET3
+
+**1. Try to upload the file as devuser with no role assumed :**
+![task6_1.png](screenshots%2Ftask6_1.png)
+
+![task6_1_2.png](screenshots%2Ftask6_1_2.png)
+
+
+**2. Assume the BucketsAccessRole, and try the actions from the previous step :**
+Bucket policy :
+```json
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "S3Write",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::058258612171:role/OtherBucketAccessRole"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::bucket3-cd668ce6-4839-4823-98df-be312db0038c/*"
+        },
+        {
+            "Sid": "ListBucket",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::058258612171:role/OtherBucketAccessRole"
+            },
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::bucket3-cd668ce6-4839-4823-98df-be312db0038c"
+        }
+    ]
+}
+```
+
+We have all the information we need. We can use the account ID : `058258612171` and the role : `OtherBucketAccessRole`
+to be able to upload the object to the S3 bucket `bucket3-cd668ce6-4839-4823-98df-be312db0038c` :
+
+![task6_3.png](screenshots%2Ftask6_3.png)
 
 ### TASK 7: DESIGN AND IMPLEMENT PERMISSION POLICIES FOR S3
 
+Create a bucket that at the top level has three folders for internal, private, and public data :
+
+![task7_1.png](screenshots%2Ftask7_1.png)
+
+Create the following IAM roles :
+- AcmeStaff role that has read access to internal and public data
+- AcmeDataScientist role that has read and write access to all data
+- AcmeDataIngester role that has write access to internal and private data
+
+![task7_2.png](screenshots%2Ftask7_2.png)
+
+Create customer-managed policies and attach them to the roles :
+
+![task7_3.png](screenshots%2Ftask7_3.png)
+
+Example for AcmeDataGrDStaff :
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::acmedata-grd/internal/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::acmedata-grd/public/*"
+        },
+        {
+            "Effect": "Deny",
+            "Action": "s3:GetObject",
+            "NotResource": [
+                "arn:aws:s3:::acmedata-grd/internal/*",
+                "arn:aws:s3:::acmedata-grd/public/*"
+            ]
+        }
+    ]
+}
+```
+
+`AcmeDataGrDStaff` policy attached to `AcmeGrDStaff` role :
+
+![task7_5.png](screenshots%2Ftask7_5.png)
