@@ -303,6 +303,7 @@ Example for AcmeDataGrDStaff :
   <img src='screenshots/task7_5.png' width='700'>
 </div>
 
+
 In order to configure policies that allow anybody to read public data, we have two approaches :
 1) Create a "Customer managed" policy `AcmeDataGrDFullReadAccess` :
 ```json
