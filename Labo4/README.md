@@ -126,6 +126,13 @@ Now that we unassumed the BucketsAccessRole, we have the permissions that are as
 </div>
 
 **6. Analyze the IAM policy that is associated with the BucketsAccessRole :**
+
+`GrantBucket1Access` : the entity is allowed to retrieve an S3 Object (s3:GetObject) and list the contents of a S3
+bucket (s3:ListBucket) on the bucket1 and its objects.
+
+`ListAllBucketsPolicy` : the entity is allowed to list all the S3 buckets (s3:ListAllMyBuckets). The action is
+allowed on all resources (*).
+
 <div style="text-align:left;">
   <img src='screenshots/task4_6.png' width='700'>
 </div>
@@ -133,11 +140,18 @@ Now that we unassumed the BucketsAccessRole, we have the permissions that are as
 **7. Save a copy of the GrantBucket1Access policy to your computer**
 
 **8. Complete your analysis of the BucketsAccessRole details :**
+
+This IAM role trust policy allows the IAM users (devuser1, devuser2 and devuser3) in the AWS account that has the ID
+058258612171 to assume the IAM role associated with this trust policy (sts:AssumeRole).
+
 <div style="text-align:left;">
   <img src='screenshots/task4_8.png' width='700'>
 </div>
 
 **9. Assume the BucketsAccessRole, and try to upload an image to bucket2 :**
+
+We were able to upload the image to bucket2 since the user `devuser1` is able to assume the role `BucketsAccessRole`.
+This role is allowed to download (s3:GetObject) and upload (s3:PutObject) objects to bucket2.
 <div style="text-align:left;">
   <img src='screenshots/task4_9.png' width='700'>
 </div>
