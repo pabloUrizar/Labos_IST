@@ -104,12 +104,14 @@ not explicity allowed they are denied by default.
 </div>
 
 **3. Try to download an object from Amazon S3 again :**
+
 As expected, we were able to download the image since the S3 permission `s3:GetObject` on `bucket1` is allowed.
 <div style="text-align:left;">
   <img src='Image2-GrD.jpg' width='300'>
 </div>
 
 **4. Test IAM access with the BucketsAccessRole :**
+
 As expected, an error message displays that we no longer have permissions to view the IAM user groups page because
 BucketsAccessRole does not have the iam:ListGroups action applied to it.
 <div style="text-align:left;">
@@ -119,6 +121,7 @@ BucketsAccessRole does not have the iam:ListGroups action applied to it.
 `AccessDenied` error page appears as expected.
 
 **5. Assume the devuser role again, and test access to the user groups page :**
+
 Now that we unassumed the BucketsAccessRole, we have the permissions that are assigned to the devuser IAM user
 (through this user's membership in the DeveloperGroup). We are able to view the user groups page again.
 <div style="text-align:left;">
@@ -151,7 +154,8 @@ This IAM role trust policy allows the IAM users (devuser1, devuser2 and devuser3
 **9. Assume the BucketsAccessRole, and try to upload an image to bucket2 :**
 
 We were able to upload the image to bucket2 since the user `devuser1` is able to assume the role `BucketsAccessRole`.
-This role is allowed to download (s3:GetObject) and upload (s3:PutObject) objects to bucket2.
+This role is allowed to download (s3:GetObject) and upload (s3:PutObject) objects to bucket2. There is a also a bucket
+policy for `bucket2` that grants the `s3:PutObject` to bucket2 to `BucketsAccessRole` principal. 
 <div style="text-align:left;">
   <img src='screenshots/task4_9.png' width='700'>
 </div>
@@ -159,6 +163,10 @@ This role is allowed to download (s3:GetObject) and upload (s3:PutObject) object
 ### TASK 5: UNDERSTANDING RESOURCE-BASED POLICIES
 
 **1. Observe the details of the bucket policy that is applied to bucket2 :**
+
+In this bucket policy we allow the IAM role `BucketsAccessRole` to perform `s3:GetObject` and `s3:PutObject` actions
+on objects within bucket2 and allow `s3:ListBucket` on the same bucket.
+
 Bucket policy:
 ```json
 {
