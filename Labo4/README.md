@@ -65,6 +65,11 @@ DeveloperGroupPolicy:
     ]
 }
 ```
+Here is what we can state in the `DeveloperGroupPolicy` :
+
+- There isn't anything related to EC2
+- The `iam:GetAccountSummary` is not present in the policy
+- There are no object-related actions granted to S3 (GetObject, PutObject, DeleteObject, etc.)
 
 ### TASK 3: ATTEMPTING WRITE-LEVEL ACCESS TO AWS SERVICES
 
