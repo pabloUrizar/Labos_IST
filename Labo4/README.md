@@ -19,6 +19,7 @@ A message displays "You are not authorized to perform this operation" as expecte
 </div>
 
 The `Access` column displays the message "Insufficient permissions" for all the three buckets as expected.
+
 ### TASK 2: ANALYZING THE IDENTITY-BASED POLICY APPLIED TO THE IAM USER
 Review the IAM policy details.
 <div style="text-align:left;">
@@ -63,8 +64,8 @@ DeveloperGroupPolicy:
     ]
 }
 ```
-Here is what we can state in the `DeveloperGroupPolicy` :
 
+Here is what we can state in the `DeveloperGroupPolicy` given :
 - There isn't anything related to EC2
 - The `iam:GetAccountSummary` is not present in the policy
 - There are no object-related actions granted to S3 (GetObject, PutObject, DeleteObject, etc.)
