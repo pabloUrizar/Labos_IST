@@ -241,7 +241,7 @@ Bucket policy :
 ```
 
 We have all the information we need. We can use the account ID : `058258612171` and the role : `OtherBucketAccessRole`
-to be able to upload the object to the S3 bucket `bucket3-cd668ce6-4839-4823-98df-be312db0038c` :
+to be able to upload the object to the S3 bucket `bucket3-cd668ce6-4839-4823-98df-be312db0038c` as follows :
 
 <div style="text-align:left;">
   <img src='screenshots/task6_3.png' width='700'>
