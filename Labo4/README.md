@@ -302,3 +302,39 @@ Example for AcmeDataGrDStaff :
 <div style="text-align:left;">
   <img src='screenshots/task7_5.png' width='700'>
 </div>
+
+In order to configure policies that allow anybody to read public data, we have two approaches :
+1) Create a "Customer managed" policy `AcmeDataGrDFullReadAccess` :
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::acmedata-grd/public/*"
+        }
+    ]
+}
+```
+2) Under "Permissions" of our bucket, edit the `Bucket policy` :
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::your-account-id:role/AcmeGrDDataIngester",
+                    "arn:aws:iam::your-account-id:role/AcmeGrDDataScientist",
+                    "arn:aws:iam::your-account-id:role/AcmeGrDStaff"
+                ]
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::acmedata-grd/public/*"
+        }
+    ]
+}
+
+```
