@@ -1,6 +1,5 @@
 # LAB 4: S3 ACCESS CONTROL
 Authors : Valzino Benjamin, Urizar Pablo
-
 ### TASK 1: ACCESSING THE CONSOLE AS AN IAM USER
 **2. Open the Amazon EC2 console. Choose EC2 Dashboard. Many API Error messages display. This is expected.**
 <div style="text-align:left;">
@@ -20,7 +19,6 @@ A message displays "You are not authorized to perform this operation" as expecte
 </div>
 
 The `Access` column displays the message "Insufficient permissions" for all the three buckets as expected.
-
 ### TASK 2: ANALYZING THE IDENTITY-BASED POLICY APPLIED TO THE IAM USER
 Review the IAM policy details.
 <div style="text-align:left;">
