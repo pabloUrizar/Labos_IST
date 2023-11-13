@@ -3,21 +3,29 @@ Authors : Valzino Benjamin, Urizar Pablo
 
 ### TASK 1: ACCESSING THE CONSOLE AS AN IAM USER
 **2. Open the Amazon EC2 console. Choose EC2 Dashboard. Many API Error messages display. This is expected.**
-![task1_2.png](screenshots%2Ftask1_2.png)
+<div style="text-align:left;">
+  <img src='screenshots/task1_2.png' width='700'>
+</div>
 
 **3. Attempt some actions in the Amazon EC2 console :**
-![task1_3.png](screenshots%2Ftask1_3.png)
+<div style="text-align:left;">
+  <img src='screenshots/task1_3.png' width='700'>
+</div>
 
 A message displays "You are not authorized to perform this operation" as expected.
 
 **4. To explore what you can access in the Amazon S3 console, open it :**
-![task1_4.png](screenshots%2Ftask1_4.png)
+<div style="text-align:left;">
+  <img src='screenshots/task1_4.png' width='700'>
+</div>
 
 The `Access` column displays the message "Insufficient permissions" for all the three buckets as expected.
 
 ### TASK 2: ANALYZING THE IDENTITY-BASED POLICY APPLIED TO THE IAM USER
 Review the IAM policy details.
-![task2_2.png](screenshots%2Ftask2_2.png)
+<div style="text-align:left;">
+  <img src='screenshots/task2_2.png' width='700'>
+</div>
 
 DeveloperGroupPolicy:
 ```json
@@ -61,10 +69,14 @@ DeveloperGroupPolicy:
 ### TASK 3: ATTEMPTING WRITE-LEVEL ACCESS TO AWS SERVICES
 
 **1. Attempt to create an S3 bucket :**
-![task3_1.png](screenshots%2Ftask3_1.png)
+<div style="text-align:left;">
+  <img src='screenshots/task3_1.png' width='700'>
+</div>
 
 **2. Access the bucket and attempt to upload an object. A message displays `Upload failed` as expected :**
-![task3_2.png](screenshots%2Ftask3_2.png)
+<div style="text-align:left;">
+  <img src='screenshots/task3_2.png' width='700'>
+</div>
 
 **3. Review the policy details for Amazon S3 access :**
 
@@ -78,38 +90,53 @@ not explicity allowed they are denied by default.
 ### TASK 4: ASSUMING AN IAM ROLE AND REVIEWING A RESOURCE-BASED POLICY
 
 **1. Try to download an object from the buckets that were created during lab setup :**
-![task4_1.png](screenshots%2Ftask4_1.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_1.png' width='700'>
+</div>
 
 **2. Assume the BucketsAccessRole IAM role in the console :**
-
-<img src='screenshots/task4_2.png' width='300'>
+<div style="text-align:left;">
+  <img src='screenshots/task4_2.png' width='300'>
+</div>
 
 **3. Try to download an object from Amazon S3 again :**
 As expected, we were able to download the image since the S3 permission `s3:GetObject` on `bucket1` is allowed.
-![Image2-GrD.jpg](Image2-GrD.jpg)
+<div style="text-align:left;">
+  <img src='Image2-GrD.jpg' width='300'>
+</div>
 
 **4. Test IAM access with the BucketsAccessRole :**
 As expected, an error message displays that we no longer have permissions to view the IAM user groups page because
 BucketsAccessRole does not have the iam:ListGroups action applied to it.
-![task4_4.png](screenshots%2Ftask4_4.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_4.png' width='700'>
+</div>
 
 `AccessDenied` error page appears as expected.
 
 **5. Assume the devuser role again, and test access to the user groups page :**
 Now that we unassumed the BucketsAccessRole, we have the permissions that are assigned to the devuser IAM user
 (through this user's membership in the DeveloperGroup). We are able to view the user groups page again.
-![task4_5.png](screenshots%2Ftask4_5.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_5.png' width='700'>
+</div>
 
 **6. Analyze the IAM policy that is associated with the BucketsAccessRole :**
-![task4_6.png](screenshots%2Ftask4_6.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_6.png' width='700'>
+</div>
 
 **7. Save a copy of the GrantBucket1Access policy to your computer**
 
 **8. Complete your analysis of the BucketsAccessRole details :**
-![task4_8.png](screenshots%2Ftask4_8.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_8.png' width='700'>
+</div>
 
 **9. Assume the BucketsAccessRole, and try to upload an image to bucket2 :**
-![task4_9.png](screenshots%2Ftask4_9.png)
+<div style="text-align:left;">
+  <img src='screenshots/task4_9.png' width='700'>
+</div>
 
 ### TASK 5: UNDERSTANDING RESOURCE-BASED POLICIES
 
@@ -147,9 +174,13 @@ Bucket policy:
 ### TASK 6: FIND A WAY TO UPLOAD AN OBJECT TO BUCKET3
 
 **1. Try to upload the file as devuser with no role assumed :**
-![task6_1.png](screenshots%2Ftask6_1.png)
+<div style="text-align:left;">
+  <img src='screenshots/task6_1.png' width='700'>
+</div>
 
-![task6_1_2.png](screenshots%2Ftask6_1_2.png)
+<div style="text-align:left;">
+  <img src='screenshots/task6_1_2.png' width='700'>
+</div>
 
 
 **2. Assume the BucketsAccessRole, and try the actions from the previous step :**
@@ -186,24 +217,32 @@ Bucket policy :
 We have all the information we need. We can use the account ID : `058258612171` and the role : `OtherBucketAccessRole`
 to be able to upload the object to the S3 bucket `bucket3-cd668ce6-4839-4823-98df-be312db0038c` :
 
-![task6_3.png](screenshots%2Ftask6_3.png)
+<div style="text-align:left;">
+  <img src='screenshots/task6_3.png' width='700'>
+</div>
 
 ### TASK 7: DESIGN AND IMPLEMENT PERMISSION POLICIES FOR S3
 
 Create a bucket that at the top level has three folders for internal, private, and public data :
 
-![task7_1.png](screenshots%2Ftask7_1.png)
+<div style="text-align:left;">
+  <img src='screenshots/task7_1.png' width='700'>
+</div>
 
 Create the following IAM roles :
 - AcmeStaff role that has read access to internal and public data
 - AcmeDataScientist role that has read and write access to all data
 - AcmeDataIngester role that has write access to internal and private data
 
-![task7_2.png](screenshots%2Ftask7_2.png)
+<div style="text-align:left;">
+  <img src='screenshots/task7_2.png' width='700'>
+</div>
 
 Create customer-managed policies and attach them to the roles :
 
-![task7_3.png](screenshots%2Ftask7_3.png)
+<div style="text-align:left;">
+  <img src='screenshots/task7_3.png' width='700'>
+</div>
 
 Example for AcmeDataGrDStaff :
 ```json
@@ -234,4 +273,6 @@ Example for AcmeDataGrDStaff :
 
 `AcmeDataGrDStaff` policy attached to `AcmeGrDStaff` role :
 
-![task7_5.png](screenshots%2Ftask7_5.png)
+<div style="text-align:left;">
+  <img src='screenshots/task7_5.png' width='700'>
+</div>
