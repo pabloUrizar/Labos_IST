@@ -303,39 +303,45 @@ Example for AcmeDataGrDStaff :
   <img src='screenshots/task7_5.png' width='700'>
 </div>
 
+To configure policies that allow anybody to have read access to the `public` folder in our S3 bucket we created the
+bucket policy :
 
-In order to configure policies that allow anybody to read public data, we have two approaches :
-1) Create a "Customer managed" policy `AcmeDataGrDFullReadAccess` :
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::acmedata-grd/public/*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::acmedata-grd"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::acmedata-grd/public/*"
+    }
+  ]
 }
 ```
-2) Under "Permissions" of our bucket, edit the `Bucket policy` :
+
+If we needed to grant read access to the public data only to the IAM roles we created previously, we could create a
+customer managed policy `AcmeDataGrDFullReadAccess` and attach it to the 3 roles :
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": [
-                    "arn:aws:iam::your-account-id:role/AcmeGrDDataIngester",
-                    "arn:aws:iam::your-account-id:role/AcmeGrDDataScientist",
-                    "arn:aws:iam::your-account-id:role/AcmeGrDStaff"
-                ]
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::acmedata-grd/public/*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::acmedata-grd"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::acmedata-grd/public/*"
+    }
+  ]
 }
-
 ```
