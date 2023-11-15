@@ -107,14 +107,14 @@ not explicity allowed they are denied by default.
 
 **2. Assume the BucketsAccessRole IAM role in the console :**
 <div style="text-align:left;">
-  <img src='screenshots/task4_2.png' width='200'>
+  <img src='screenshots/task4_2.png' width='150'>
 </div>
 
 **3. Try to download an object from Amazon S3 again :**
 
 As expected, we were able to download the image since the S3 permission `s3:GetObject` on `bucket1` is allowed.
 <div style="text-align:left;">
-  <img src='Image2-GrD.jpg' width='200'>
+  <img src='Image2-GrD.jpg' width='150'>
 </div>
 
 **4. Test IAM access with the BucketsAccessRole :**
