@@ -71,7 +71,6 @@ Here is what we can state in the `DeveloperGroupPolicy` given :
 - There are no object-related actions granted to S3 (GetObject, PutObject, DeleteObject, etc.)
 
 ### TASK 3: ATTEMPTING WRITE-LEVEL ACCESS TO AWS SERVICES
-
 **1. Attempt to create an S3 bucket :**
 <div style="text-align:left;">
   <img src='screenshots/task3_1.png' width='700'>
@@ -92,7 +91,6 @@ Additionally, we could also add `s3:GetObject` to allow us to retrieve an object
 not explicity allowed they are denied by default. 
 
 ### TASK 4: ASSUMING AN IAM ROLE AND REVIEWING A RESOURCE-BASED POLICY
-
 **1. Try to download an object from the buckets that were created during lab setup :**
 <div style="text-align:left;">
   <img src='screenshots/task4_1.png' width='700'>
@@ -161,7 +159,6 @@ policy for `bucket2` that grants the `s3:PutObject` to bucket2 to `BucketsAccess
 </div>
 
 ### TASK 5: UNDERSTANDING RESOURCE-BASED POLICIES
-
 **1. Observe the details of the bucket policy that is applied to bucket2 :**
 
 In this bucket policy we allow the IAM role `BucketsAccessRole` to perform `s3:GetObject` and `s3:PutObject` actions
@@ -198,7 +195,6 @@ Bucket policy:
 ```
 
 ### TASK 6: FIND A WAY TO UPLOAD AN OBJECT TO BUCKET3
-
 **1. Try to upload the file as devuser with no role assumed :**
 <div style="text-align:left;">
   <img src='screenshots/task6_1.png' width='700'>
@@ -248,7 +244,6 @@ to be able to upload the object to the S3 bucket `bucket3-cd668ce6-4839-4823-98d
 </div>
 
 ### TASK 7: DESIGN AND IMPLEMENT PERMISSION POLICIES FOR S3
-
 Create a bucket that at the top level has three folders for internal, private, and public data :
 
 <div style="text-align:left;">
