@@ -31,6 +31,8 @@ Review the IAM policy details.
   <img src='screenshots/task2_2.png' width='600'>
 </div>
 
+<br>  
+
 DeveloperGroupPolicy:
 ```json
 {
