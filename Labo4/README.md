@@ -256,13 +256,13 @@ Create the following IAM roles :
 - AcmeDataIngester role that has write access to internal and private data
 
 <div style="text-align:left;">
-  <img src='screenshots/task7_2.png' width='600'>
+  <img src='screenshots/task7_2.png' width='450'>
 </div>
 
 Create customer-managed policies and attach them to the roles :
 
 <div style="text-align:left;">
-  <img src='screenshots/task7_3.png' width='600'>
+  <img src='screenshots/task7_3.png' width='450'>
 </div>
 
 Example for AcmeDataGrDStaff :
@@ -295,7 +295,7 @@ Example for AcmeDataGrDStaff :
 `AcmeDataGrDStaff` policy attached to `AcmeGrDStaff` role :
 
 <div style="text-align:left;">
-  <img src='screenshots/task7_5.png' width='600'>
+  <img src='screenshots/task7_5.png' width='400'>
 </div>
 
 To configure policies that allow anybody to have read access to the `public` folder in our S3 bucket we created the
