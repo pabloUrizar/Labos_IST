@@ -298,6 +298,9 @@ Example for AcmeDataGrDStaff :
   <img src='screenshots/task7_5.png' width='400'>
 </div>
 
+<br>  
+<br>  
+
 To configure policies that allow anybody to have read access to the `public` folder in our S3 bucket we created the
 bucket policy :
 
