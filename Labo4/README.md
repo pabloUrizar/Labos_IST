@@ -295,7 +295,7 @@ Example for AcmeDataGrDStaff :
 `AcmeDataGrDStaff` policy attached to `AcmeGrDStaff` role :
 
 <div style="text-align:left;">
-  <img src='screenshots/task7_5.png' width='400'>
+  <img src='screenshots/task7_5.png' width='500'>
 </div>
 
 <br>  
