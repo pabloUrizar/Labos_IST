@@ -300,6 +300,8 @@ Example for AcmeDataGrDStaff :
 
 <br>  
 <br>  
+<br>  
+<br>  
 
 To configure policies that allow anybody to have read access to the `public` folder in our S3 bucket we created the
 bucket policy :
