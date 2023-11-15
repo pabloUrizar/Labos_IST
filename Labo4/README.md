@@ -117,6 +117,8 @@ As expected, we were able to download the image since the S3 permission `s3:GetO
   <img src='Image2-GrD.jpg' width='150'>
 </div>
 
+<br>  
+
 **4. Test IAM access with the BucketsAccessRole :**
 
 As expected, an error message displays that we no longer have permissions to view the IAM user groups page because
