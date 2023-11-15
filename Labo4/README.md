@@ -34,6 +34,7 @@ Review the IAM policy details.
 </div>
 
 <br>  
+<br>  
 
 DeveloperGroupPolicy:
 ```json
