@@ -135,7 +135,7 @@ bucket (s3:ListBucket) on the bucket1 and its objects.
 allowed on all resources (*).
 
 <div style="text-align:left;">
-  <img src='screenshots/task4_6.png' width='600'>
+  <img src='screenshots/task4_6.png' width='500'>
 </div>
 
 **7. Save a copy of the GrantBucket1Access policy to your computer**
