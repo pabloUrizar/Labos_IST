@@ -10,6 +10,8 @@ Authors : Valzino Benjamin, Urizar Pablo
 <br>  
 <br>  
 <br>  
+<br>  
+
 
 **3. Attempt some actions in the Amazon EC2 console :**
 <div style="text-align:left;">
