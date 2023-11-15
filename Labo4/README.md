@@ -6,6 +6,12 @@ Authors : Valzino Benjamin, Urizar Pablo
   <img src='screenshots/task1_2.png' width='600'>
 </div>
 
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+
 **3. Attempt some actions in the Amazon EC2 console :**
 <div style="text-align:left;">
   <img src='screenshots/task1_3.png' width='600'>
@@ -297,9 +303,6 @@ Example for AcmeDataGrDStaff :
 <div style="text-align:left;">
   <img src='screenshots/task7_5.png' width='600'>
 </div>
-
-<br>  
-<br>  
 
 To configure policies that allow anybody to have read access to the `public` folder in our S3 bucket we created the
 bucket policy :
