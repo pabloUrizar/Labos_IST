@@ -1,13 +1,13 @@
 # LAB 5: SERVERLESS DATA INGESTION AND PROCESSING
 Authors : Valzino Benjamin, Urizar Pablo
 
-### TASK 1: EXPLORE METEOSWISS DATA
+## TASK 1: EXPLORE METEOSWISS DATA
 
 **4. Explore the measurement values.**
 
-*Data plausibility check: In the list of weather stations find one near you and write down its three-letter ID. In the
+**Data plausibility check: In the list of weather stations find one near you and write down its three-letter ID. In the
 description of columns find the temperature column. In the measurement table look up the current temperature
-measurement of the station. Does it correspond to what your thermometer or MeteoSwiss’ website or mobile app shows?*
+measurement of the station. Does it correspond to what your thermometer or MeteoSwiss’ website or mobile app shows?**
 
 Three-letter ID : PUY\
 Current temperature measurement of station : 6.6 °C\
@@ -15,8 +15,8 @@ Météo Suisse : 6.4 °C
 
 It is not exactly the same, but it is fairly accurate.
 
-*In the measurement table examine the Date column (you may have to change its format to see it properly). What does it
-contain exactly? Precision?*
+**In the measurement table examine the Date column (you may have to change its format to see it properly). What does it
+contain exactly? Precision?**
 
 The second column represents the timestamp in the format `YYYYMMDDHHmm` (Year, Month, Day, Hour, Minute).
 In our case the timestamp for Pully is `202311181000` (2023-11-18 10:00). That means that the timestamp format provides
@@ -46,9 +46,9 @@ are well-organized and there is also a good documentation to help us in our expl
 combination of a user-friendly portal and great meteorological datasets creates a good positive experience to open data
 sources.
 
-### TASK 2: UPLOAD THE CURRENT MEASUREMENT DATA TO S3 AND RUN SQL QUERIES ON IT
+## TASK 2: UPLOAD THE CURRENT MEASUREMENT DATA TO S3 AND RUN SQL QUERIES ON IT
 
-### TASK 3: WRITE A PYTHON SCRIPT TO DOWNLOAD THE CURRENT MEASUREMENT VALUES FROM METEOSWISS AND UPLOAD THEM TO S3
+## TASK 3: WRITE A PYTHON SCRIPT TO DOWNLOAD THE CURRENT MEASUREMENT VALUES FROM METEOSWISS AND UPLOAD THEM TO S3
 
 lambda_function.py :
 ```python
@@ -115,7 +115,7 @@ pablo@Macbook-Pro-M1 Labo5 % python3 local_test.py
 }
 ```
 
-### TASK 4: CONVERT YOUR SCRIPT INTO AN AWS LAMBDA FUNCTION FOR DATA INGESTION
+## TASK 4: CONVERT YOUR SCRIPT INTO AN AWS LAMBDA FUNCTION FOR DATA INGESTION
 
 lambda_function.py :
 ```python
@@ -177,9 +177,9 @@ Customer managed policy `writeAccess-grd` attached to the role `meteoswiss-inges
 }
 ```
 
-### TASK 5: CREATE AN EVENT RULE THAT TRIGGERS YOUR FUNCTION EVERY 10 MINUTES
+## TASK 5: CREATE AN EVENT RULE THAT TRIGGERS YOUR FUNCTION EVERY 10 MINUTES
 
-### TASK 6: TRANSFORM THE WEATHER STATIONS FILE INTO A CSV FILE
+## TASK 6: TRANSFORM THE WEATHER STATIONS FILE INTO A CSV FILE
 
 **4. Examine the YAML. There are two top-level keys, what are their names?**
 
