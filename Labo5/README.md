@@ -179,3 +179,32 @@ Customer managed policy `writeAccess-grd` attached to the role `meteoswiss-inges
 
 ### TASK 5: CREATE AN EVENT RULE THAT TRIGGERS YOUR FUNCTION EVERY 10 MINUTES
 
+### TASK 6: TRANSFORM THE WEATHER STATIONS FILE INTO A CSV FILE
+
+**4. Examine the YAML. There are two top-level keys, what are their names?**
+
+We found the following top-level keys :
+```shell
+$ cat file.json | jq -r 'keys[]'
+creation_time
+crs
+features
+license
+map_abstract
+map_long_name
+map_short_name
+mapname
+type
+```
+
+Key that has an array as value :
+```shell
+$ cat file.json | jq -r 'to_entries[] | select(.value | type == "array") | .key'
+features
+```
+
+Final jq command :
+```shell
+echo "id,station_name,altitude,coord_lng,coord_lat" > output.csv && \
+cat file.json | jq -r '.features[] | [.id, .properties.station_name, .properties.altitude, .geometry.coordinates[0], .geometry.coordinates[1]] | @csv' >> output.csv
+```
