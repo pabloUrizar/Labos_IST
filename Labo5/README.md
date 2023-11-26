@@ -236,20 +236,49 @@ datetime.**
 SELECT *
 FROM meteoswiss_grd.current
 WHERE station = 'PAY'
-ORDER BY datetime ASC;
+ORDER BY datetime ASC
+limit 10;
 ```
+
+| #   | station | datetime        | temperature | precipitation | sunshine | radiation |
+|-----|---------|-----------------|-------------|---------------|----------|-----------|
+| 1   | PAY     | 202311181000    | 4.7         | 0.0           | 0.0      | 131.0     |
+| 2   | PAY     | 202311201620    | 9.9         | 0.0           | 0.0      | 0.0       |
+| 3   | PAY     | 202311201630    | 9.8         | 0.0           | 0.0      | 0.0       |
+| 4   | PAY     | 202311201640    | 9.7         | 0.0           | 0.0      | 0.0       |
+| 5   | PAY     | 202311201650    | 9.7         | 0.0           | 0.0      | 0.0       |
+| 6   | PAY     | 202311201700    | 9.6         | 0.0           | 0.0      | 0.0       |
+| 7   | PAY     | 202311201710    | 9.3         | 0.0           | 0.0      | 0.0       |
+| 8   | PAY     | 202311201720    | 9.3         | 0.0           | 0.0      | 0.0       |
+| 9   | PAY     | 202311201730    | 9.1         | 0.0           | 0.0      | 0.0       |
+| 10  | PAY     | 202311201740    | 9.2         | 0.0           | 0.0      | 0.0       |
 
 **3. For Payerne, make a query that returns the maximum temperature for each hour, sorted by increasing hour.**
 
 ```sql
 SELECT
-  date_trunc('hour', date_parse(CAST(datetime AS VARCHAR), '%Y%m%d%H%i')) AS hour,
+    date_trunc('hour', date_parse(CAST(datetime AS VARCHAR), '%Y%m%d%H%i')) AS hour,
   MAX(temperature) AS max_temperature
 FROM meteoswiss_grd.current
 WHERE station = 'PAY'
 GROUP BY date_trunc('hour', date_parse(CAST(datetime AS VARCHAR), '%Y%m%d%H%i'))
-ORDER BY hour;
+ORDER BY hour
+limit 10;
 ```
+
+| #   | hour                         | max_temperature |
+|-----|------------------------------|-----------------|
+| 1   | 2023-11-18 10:00:00.000      | 4.7             |
+| 2   | 2023-11-20 16:00:00.000      | 9.9             |
+| 3   | 2023-11-20 17:00:00.000      | 9.6             |
+| 4   | 2023-11-20 18:00:00.000      | 9.3             |
+| 5   | 2023-11-20 19:00:00.000      | 9.4             |
+| 6   | 2023-11-20 20:00:00.000      | 8.6             |
+| 7   | 2023-11-20 21:00:00.000      | 8.0             |
+| 8   | 2023-11-20 22:00:00.000      | 7.6             |
+| 9   | 2023-11-20 23:00:00.000      | 7.4             |
+| 10  | 2023-11-21 00:00:00.000      | 7.3             |
+
 
 **4. Create a table for the stations folder. Find all stations whose altitude is similar to Yverdon, i.e. 400 m
 <= altitude < 500 m, sorted by altitude.**
@@ -258,8 +287,22 @@ ORDER BY hour;
 SELECT *
 FROM meteoswiss_grd.stations
 WHERE altitude >= 400 AND altitude < 500
-ORDER BY altitude;
+ORDER BY altitude
+limit 10;
 ```
+
+| id | station | station_name         | altitude | coord_lng   | coord_lat   |
+|----|---------|----------------------|----------|-------------|-------------|
+| 1  | BEX     | "Bex"                | 402.0    | 2565805ls   | 1121511ls   |
+| 2  | BUE     | "Bülach"             | 403.0    | 2682029ls   | 1263775ls   |
+| 3  | VEV     | "Vevey / Corseaux"   | 405.0    | 2552106ls   | 1146847ls   |
+| 4  | SCM     | "Schmerikon"         | 408.0    | 2713726ls   | 1231533ls   |
+| 5  | DOB     | "Benken / Doggen"    | 408.0    | 2715388ls   | 1227540ls   |
+| 6  | OBR     | "Oberriet / Kriesser"| 409.0    | 2764171ls   | 1249582ls   |
+| 7  | JON     | "Jona"               | 410.0    | 2706761ls   | 1231290ls   |
+| 8  | GVE     | "Genève / Cointrin"  | 411.0    | 2498904ls   | 1122632ls   |
+| 9  | ESZ     | "Eschenz"            | 414.0    | 2707844ls   | 1278214ls   |
+| 10 | CEV     | "Cevio"              | 417.0    | 2689688ls   | 1130564ls   |
 
 **5. Find the maximum temperature of all stations at an altitude similar to Yverdon, sorted by altitude.**
 
@@ -282,4 +325,45 @@ GROUP BY
 ORDER BY
   s.altitude;
 ```
+
+| id  | station_name           | altitude | max_temperature |
+|-----|------------------------|----------|-----------------|
+| 1   | VEV                    | "Vevey / Corseaux"        | 405.0    | 11.7            |
+| 2   | SCM                    | "Schmerikon"              | 408.0    |                  |
+| 3   | OBR                    | "Oberriet / Kriesser"     | 409.0    | 10.3            |
+| 4   | GVE                    | "Genève / Cointrin"       | 411.0    | 11.4            |
+| 5   | CEV                    | "Cevio"                   | 417.0    | 21.2            |
+| 6   | HLL                    | "Hallau"                  | 419.0    | 9.8             |
+| 7   | QUI                    | "Quinten"                 | 419.0    |                  |
+| 8   | WYN                    | "Wynau"                   | 422.0    | 8.6             |
+| 9   | PRE                    | "St-Prex"                 | 425.0    |                  |
+| 10  | KLO                    | "Zürich / Kloten"         | 426.0    | 9.6             |
+| 11  | GRE                    | "Grenchen"                | 428.0    | 10.5            |
+| 12  | CRM                    | "Cressier"                | 430.0    | 11.0            |
+| 13  | MAH                    | "Mathod"                  | 435.0    | 10.7            |
+| 14  | ALT                    | "Altdorf"                 | 438.0    | 9.8             |
+| 15  | SHA                    | "Schaffhausen"            | 438.0    | 9.6             |
+| 16  | DEM                    | "Delémont"                | 439.0    | 9.8             |
+| 17  | GUT                    | "Güttingen"               | 440.0    | 10.0            |
+| 18  | CHZ                    | "Cham"                    | 443.0    | 11.0            |
+| 19  | REH                    | "Zürich / Affoltern"      | 444.0    | 9.7             |
+| 20  | MOA                    | "Mosen"                   | 453.0    | 10.9            |
+| 21  | LUZ                    | "Luzern"                  | 454.0    | 12.6            |
+| 22  | PUY                    | "Pully"                   | 456.0    | 10.8            |
+| 23  | VAD                    | "Vaduz"                   | 457.0    | 12.0            |
+| 24  | CGI                    | "Nyon / Changins"         | 458.0    | 11.0            |
+| 25  | LAC                    | "Lachen / Galgenen"       | 468.0    | 11.3            |
+| 26  | GIH                    | "Giswil"                  | 471.0    | 11.8            |
+| 27  | MUB                    | "Mühleberg"               | 480.0    | 10.3            |
+| 28  | SIO                    | "Sion"                    | 482.0    | 10.9            |
+| 29  | EVI                    | "Evionnaz"                | 482.0    | 10.8            |
+| 30  | NEU                    | "Neuchâtel"               | 485.0    | 10.4            |
+| 31  | WAE                    | "Wädenswil"               | 485.0    | 10.8            |
+| 32  | KOP                    | "Koppigen"                | 485.0    | 9.5             |
+| 33  | PAY                    | "Payerne"                 | 490.0    | 10.1            |
+| 34  | STC                    | "St. Chrischona"          | 493.0    |                  |
+| 35  | RAG                    | "Bad Ragaz"               | 497.0    | 10.8            |
+
+
+## TASK 8: WRITE AN S3 OBJECT LAMBDA FUNCTION TO TRANSFORM DATA
 
