@@ -205,6 +205,81 @@ features
 
 Final jq command :
 ```shell
-echo "id,station_name,altitude,coord_lng,coord_lat" > output.csv && \
-cat file.json | jq -r '.features[] | [.id, .properties.station_name, .properties.altitude, .geometry.coordinates[0], .geometry.coordinates[1]] | @csv' >> output.csv
+jq -r '         
+  ["id", "station_name", "altitude", "coord_lng", "coord_lat"],
+  (.features[] | [
+    .id,
+    "\"\(.properties.station_name)\"",
+    (.properties.altitude | tostring),
+    (.geometry.coordinates[0] | tostring + "ls"),
+    (.geometry.coordinates[1] | tostring + "ls")
+  ])
+  | join(",")
+' file.json > stations.csv
 ```
+
+## TASK 7: QUERY THE ACCUMULATED DATA
+
+**1. Inspect your current folder and remove any duplicates that remain from testing. It should contain several
+measurement files, each with a distinct timestamp in the filename.**
+
+```shell
+aws s3 ls s3://ist-meteo-grd-urizar-valzino/current/ --recursive | awk '{print $4}' | sort | uniq -d
+```
+
+No objects were displayed so we do not have any duplicates.
+
+**2. Using Amazon Athena, make a query that returns all measurements for the Payerne station (PAY), sorted by ascending
+datetime.**
+
+```sql
+SELECT *
+FROM meteoswiss_grd.current
+WHERE station = 'PAY'
+ORDER BY datetime ASC;
+```
+
+**3. For Payerne, make a query that returns the maximum temperature for each hour, sorted by increasing hour.**
+
+```sql
+SELECT
+  date_trunc('hour', date_parse(CAST(datetime AS VARCHAR), '%Y%m%d%H%i')) AS hour,
+  MAX(temperature) AS max_temperature
+FROM meteoswiss_grd.current
+WHERE station = 'PAY'
+GROUP BY date_trunc('hour', date_parse(CAST(datetime AS VARCHAR), '%Y%m%d%H%i'))
+ORDER BY hour;
+```
+
+**4. Create a table for the stations folder. Find all stations whose altitude is similar to Yverdon, i.e. 400 m
+<= altitude < 500 m, sorted by altitude.**
+
+```sql
+SELECT *
+FROM meteoswiss_grd.stations
+WHERE altitude >= 400 AND altitude < 500
+ORDER BY altitude;
+```
+
+**5. Find the maximum temperature of all stations at an altitude similar to Yverdon, sorted by altitude.**
+
+```sql
+SELECT
+  s.id,
+  s.station_name,
+  s.altitude,
+  MAX(c.temperature) AS max_temperature
+FROM
+  meteoswiss_grd.stations s
+JOIN
+  meteoswiss_grd.current c
+ON
+  s.id = c.station
+WHERE
+  s.altitude >= 400 AND s.altitude < 500
+GROUP BY
+  s.id, s.station_name, s.altitude
+ORDER BY
+  s.altitude;
+```
+
