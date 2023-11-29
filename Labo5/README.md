@@ -211,8 +211,8 @@ jq -r '
     .id,
     "\"\(.properties.station_name)\"",
     (.properties.altitude | tostring),
-    (.geometry.coordinates[0] | tostring + "ls"),
-    (.geometry.coordinates[1] | tostring + "ls")
+    (.geometry.coordinates[0] | tostring),
+    (.geometry.coordinates[1] | tostring)
   ])
   | join(",")
 ' file.json > stations.csv
@@ -291,18 +291,18 @@ ORDER BY altitude
 limit 10;
 ```
 
-| id | station | station_name         | altitude | coord_lng   | coord_lat   |
-|----|---------|----------------------|----------|-------------|-------------|
-| 1  | BEX     | "Bex"                | 402.0    | 2565805ls   | 1121511ls   |
-| 2  | BUE     | "Bülach"             | 403.0    | 2682029ls   | 1263775ls   |
-| 3  | VEV     | "Vevey / Corseaux"   | 405.0    | 2552106ls   | 1146847ls   |
-| 4  | SCM     | "Schmerikon"         | 408.0    | 2713726ls   | 1231533ls   |
-| 5  | DOB     | "Benken / Doggen"    | 408.0    | 2715388ls   | 1227540ls   |
-| 6  | OBR     | "Oberriet / Kriesser"| 409.0    | 2764171ls   | 1249582ls   |
-| 7  | JON     | "Jona"               | 410.0    | 2706761ls   | 1231290ls   |
-| 8  | GVE     | "Genève / Cointrin"  | 411.0    | 2498904ls   | 1122632ls   |
-| 9  | ESZ     | "Eschenz"            | 414.0    | 2707844ls   | 1278214ls   |
-| 10 | CEV     | "Cevio"              | 417.0    | 2689688ls   | 1130564ls   |
+| id | station | station_name         | altitude | coord_lng | coord_lat |
+|----|---------|----------------------|----------|---------|---------|
+| 1  | BEX     | "Bex"                | 402.0    | 2565805 | 1121511 |
+| 2  | BUE     | "Bülach"             | 403.0    | 2682029 | 1263775 |
+| 3  | VEV     | "Vevey / Corseaux"   | 405.0    | 2552106 | 1146847 |
+| 4  | SCM     | "Schmerikon"         | 408.0    | 2713726 | 1231533 |
+| 5  | DOB     | "Benken / Doggen"    | 408.0    | 2715388 | 1227540 |
+| 6  | OBR     | "Oberriet / Kriesser"| 409.0    | 2764171 | 1249582 |
+| 7  | JON     | "Jona"               | 410.0    | 2706761 | 1231290 |
+| 8  | GVE     | "Genève / Cointrin"  | 411.0    | 2498904 | 1122632 |
+| 9  | ESZ     | "Eschenz"            | 414.0    | 2707844 | 1278214 |
+| 10 | CEV     | "Cevio"              | 417.0    | 2689688 | 1130564 |
 
 **5. Find the maximum temperature of all stations at an altitude similar to Yverdon, sorted by altitude.**
 
