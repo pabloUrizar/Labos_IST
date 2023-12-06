@@ -367,3 +367,71 @@ ORDER BY
 
 ## TASK 8: WRITE AN S3 OBJECT LAMBDA FUNCTION TO TRANSFORM DATA
 
+lambda_function.py :
+```python
+import csv
+import boto3
+from datetime import datetime
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+
+    # Extract bucket and key from the event
+    bucket = event['bucket']
+    key = event['key']
+
+    # Fetch the specified object
+    object_content = s3.get_object(Bucket=bucket, Key=key)['Body'].read().decode('utf-8')
+
+    # Process the data
+    processed_data = process_data(object_content)
+
+    # Define the output key in the 'pretty/' folder
+    output_key = f"pretty/{key.split('/')[-1]}"
+
+    # Upload the processed data to S3
+    s3.put_object(Body=processed_data, Bucket=bucket, Key=output_key)
+
+def process_data(data):
+    rows = [row.split(';') for row in data.split('\n')]
+    header = rows[0]
+    rename = [
+        'station', 'year', 'month', 'day', 'hour', 'minute',
+        'temperature', 'precipitation', 'sunshine',
+        'radiation', 'humidity', 'despoint', 'wind_dir', 'wind_speed',
+        'gust_peak', 'pressure', 'press_sea', 'press_sea_qnh',
+        'height_850_hpa', 'heigh_700_hpa', 'wind_dir_vec',
+        'wind_speed_tower', 'gust_peak_tower', 'temp_tool1',
+        'humidity_tower', 'dew_point_tower'
+    ]
+
+    header = [rename[i] for i in range(len(rename))]
+    output_rows = [header]
+    
+    for i, row in enumerate(rows[1:], start=1):
+        if len(row) >= 2:
+            try:
+                string_date = row[1]
+                year = string_date[:4]
+                month = string_date[4:6]
+                day = string_date[6:8]
+                hour = string_date[8:10]
+                minute = string_date[10:12]
+                new_row = [row[0]] + [year, month, day, hour, minute] + row[2:]
+                output_rows.append(new_row)
+            except Exception as e:
+                print(f"Error processing row {i}: {e}")
+                print(f"Row content: {row}")
+
+    output_csv = '\n'.join([','.join(map(str, row)) for row in output_rows])
+
+    return output_csv
+```
+
+Event JSON :
+```json
+{
+  "bucket": "ist-meteo-grd-urizar-valzino",
+  "key": "current/VQHA80-2023-11-20T16:31.csv"
+}
+```
