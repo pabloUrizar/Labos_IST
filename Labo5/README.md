@@ -110,7 +110,7 @@ local_test.py :
 import json
 from lambda_function import lambda_handler
 
-# Simulate an event, you can adjust this based on your actual event structure
+# Simulate an event
 sample_event = {
     "key1": "value1",
     "key2": "value2",
@@ -120,7 +120,7 @@ sample_event = {
 # Call the Lambda handler function
 result = lambda_handler(sample_event, None)
 
-# Print the result (you can customize this based on your expected return format)
+# Print the result
 print(json.dumps(result, indent=2))
 ```
 
@@ -159,7 +159,7 @@ def upload_file(content, bucket, object_name):
 def lambda_handler(event, context):
     logging.info("Function invoked with event %s", json.dumps(event))
 
-    # Generate the object name with the desired naming convention
+    # Generate the object name
     datetimenow = datetime.datetime.now().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M")
     object_name = f"current/VQHA80-{datetimenow}.csv"
 
