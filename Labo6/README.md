@@ -86,15 +86,15 @@ LIMIT 10;
 **When the query completes, you will see a message "Completed - Time in queue: xxx ms Run time: yyy sec Data scanned:
 zzz MB". Write down the run time and the volume of data scanned.**
 
-Time in queue: 71 ms
-Run time: 1.965 sec
+Time in queue: 71 ms  
+Run time: 1.965 sec  
 Data scanned: 18.70 MB
 
 **7) How much did the last query cost?**
 
-Data Scanned (in TB) = 18.70 MB / 1024 = 0.0182 TB
-Cost = Data Scanned (in TB) * Price per TB
-Cost = 0.0182 TB * $5.00 = $0.091 USD
+Data Scanned (in TB) = 18.70 MB / 1024 = 0.0182 TB  
+Cost = Data Scanned (in TB) * Price per TB  
+Cost = 0.0182 TB * $5.00 = $0.091 USD  
 
 The last query cost $0.091 USD.
 
