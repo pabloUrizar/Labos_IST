@@ -101,6 +101,67 @@ The last query cost $0.091 USD.
 
 ## TASK 3: OPTIMISE THE QUERY BY SCANNING ONLY A PARTITION OF THE DATA
 
+**1) Create a new table that contains just the data for January 2017 called jan, stored at
+s3://aws-tc-largeobjects/CUR-TF-200-ACBDFO-1/Lab2/January2017/.**
+
+**DDL definition of the table:**
+```sql
+CREATE EXTERNAL TABLE `jan`(
+  `vendorid` int, 
+  `pickup` timestamp, 
+  `dropoff` timestamp, 
+  `passenger_count` float, 
+  `trip_distance` float, 
+  `ratecodeid` float, 
+  `store_and_fwd_flag` string, 
+  `pulocationid` int, 
+  `dolocationid` int, 
+  `payment_type` int, 
+  `fare_amount` float, 
+  `extra` float, 
+  `mta_tax` float, 
+  `tip_amount` float, 
+  `tolls_amount` float, 
+  `improvement_surcharge` float, 
+  `total_amount` float, 
+  `congestion_surcharge` float, 
+  `airport_fee` float)
+ROW FORMAT DELIMITED 
+  FIELDS TERMINATED BY ',' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  's3://aws-tc-largeobjects/CUR-TF-200-ACBDFO-1/Lab2/January2017'
+TBLPROPERTIES (
+  'transient_lastDdlTime'='1702122304')
+```
+
+**2) Run the following query on the data for the whole of 2017 that summarises trips in January 2017:**
+```sql
+SELECT  count(passenger_count) AS "Number of trips",
+        sum(total_amount) AS "Total fares",
+        pickup AS "Trip date"
+FROM yellow WHERE pickup
+between TIMESTAMP '2018-01-01 00:00:00'
+     and TIMESTAMP '2018-02-01 00:00:01'
+GROUP BY pickup;
+```
+
+Amount of data scanned: 9.32 GB
+
+**3) Run the following query on the data for January 2017 only:**
+```sql
+SELECT count(passenger_count) AS "Number of trips" ,
+        sum(total_amount) AS "Total fares" ,
+        pickup AS "Trip date"
+FROM jan
+GROUP BY pickup;
+```
+
+Amount of data scanned: 815.30 MB
+
 ## TASK 4: CREATE A PARTITIONED TABLE IN THE DATA CATALOG WITH A GLUE CRAWLER
 
 ## TASK 5: EXPLORE AND TRANSFORM DATA WITH GLUE DATABREW
