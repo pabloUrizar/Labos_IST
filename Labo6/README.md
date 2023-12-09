@@ -164,5 +164,70 @@ Amount of data scanned: 815.30 MB
 
 ## TASK 4: CREATE A PARTITIONED TABLE IN THE DATA CATALOG WITH A GLUE CRAWLER
 
+**DDL definition of the table:**
+```sql
+CREATE EXTERNAL TABLE `partyellow`(
+  `vendorid` bigint, 
+  `tpep_pickup_datetime` timestamp, 
+  `tpep_dropoff_datetime` timestamp, 
+  `passenger_count` double, 
+  `trip_distance` double, 
+  `ratecodeid` double, 
+  `store_and_fwd_flag` string, 
+  `pulocationid` bigint, 
+  `dolocationid` bigint, 
+  `payment_type` bigint, 
+  `fare_amount` double, 
+  `extra` double, 
+  `mta_tax` double, 
+  `tip_amount` double, 
+  `tolls_amount` double, 
+  `improvement_surcharge` double, 
+  `total_amount` double, 
+  `congestion_surcharge` double, 
+  `airport_fee` double)
+PARTITIONED BY ( 
+  `year` string, 
+  `month` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+LOCATION
+  's3://heigvd-ist/nyc-tlc/yellow/'
+TBLPROPERTIES (
+  'CrawlerSchemaDeserializerVersion'='1.0', 
+  'CrawlerSchemaSerializerVersion'='1.0', 
+  'UPDATED_BY_CRAWLER'='nyc-tlc-grd', 
+  'averageRecordSize'='26', 
+  'classification'='parquet', 
+  'compressionType'='none', 
+  'objectCount'='45', 
+  'partition_filtering.enabled'='true', 
+  'recordCount'='169480265', 
+  'sizeKey'='2552003645', 
+  'typeOfData'='file')
+```
+
+**3) Examine the newly created table: On the left menu choose Databases. Select your NYC taxi trip database and locate
+the newly created table. Click on it to view detailed information. View the schema. What virtual columns were added to
+the schema? Also click on Partitions to view the partitions of the table.**
+
+Virtual columns added to the schema: `year` and `month`
+
+**4) In Athena write a query that makes use of the added virtual columns to restrict the scanning of data to August of
+2022.** **How much data was scanned?**
+
+```sql
+SELECT *
+FROM partyellow
+WHERE year = '2022' AND month = '08';
+```
+
+Amount of data scanned: 47.40 MB
+
+
 ## TASK 5: EXPLORE AND TRANSFORM DATA WITH GLUE DATABREW
 
