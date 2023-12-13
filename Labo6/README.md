@@ -223,7 +223,7 @@ Virtual columns added to the schema: `year` and `month`
 ```sql
 SELECT *
 FROM partyellow
-WHERE year = '2022' AND month = '08';
+WHERE year = '2022' AND month = '08';a
 ```
 
 Amount of data scanned: 47.40 MB
@@ -231,3 +231,25 @@ Amount of data scanned: 47.40 MB
 
 ## TASK 5: EXPLORE AND TRANSFORM DATA WITH GLUE DATABREW
 
+**2) Explore the statistics and visualisations DataBrew has generated for each column of the data. What is the largest
+distance travelled (approximately)? What is the biggest tip given by a passenger (approximately)?**
+
+![task5_3.png](screenshots%2Ftask5_3.png)
+
+![task5_2.png](screenshots%2Ftask5_2.png)
+
+**3) Verify the data types DataBrew has inferred from the data and correct them if necessary. Click on the Schema tab
+to see an overview of the columns with their types. Click on the data type to change it.**
+
+![task5_4.png](screenshots%2Ftask5_4.png)
+
+**4) Write the data to a Parquet file in the bucket you created for the MeteoSwiss lab, How big are the generated
+files?**
+
+Schema of the generated Parquet files :
+
+```sql
+DESCRIBE taxidata_grd.parquet;
+```
+
+![task5_6.png](screenshots%2Ftask5_6.png)
