@@ -223,7 +223,7 @@ Virtual columns added to the schema: `year` and `month`
 ```sql
 SELECT *
 FROM partyellow
-WHERE year = '2022' AND month = '08';a
+WHERE year = '2022' AND month = '08';
 ```
 
 Amount of data scanned: 47.40 MB
